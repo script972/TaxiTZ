@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_tab"
+    android:orientation="vertical" android:minHeight="70dp" android:layout_gravity="center">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_lock_idle_alarm" android:layout_gravity="center" android:layout_marginTop="25dp" android:scaleX="2" android:scaleY="2"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/previously" android:textSize="16sp" android:layout_gravity="center" android:layout_marginLeft="15dp" android:layout_marginRight="15dp" android:layout_marginTop="15dp" android:maxHeight="22sp"  />
+
+</LinearLayout>
