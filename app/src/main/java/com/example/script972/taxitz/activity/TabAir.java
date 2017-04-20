@@ -36,7 +36,7 @@ public class TabAir extends Activity {
 
     private void fillData() {
         for (int i = 0; i < 20; i++) {
-            orders.add(new Order("Адрес1", "Адрес2", "Описание", 30, new Date()));
+            orders.add(new Order("Адрес "+i, "Адрес "+i+1, "Описание "+i*23, 30+i*21, new Date()));
         }
     }
 }

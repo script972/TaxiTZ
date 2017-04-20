@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.script972.taxitz.model.Order;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -47,12 +48,14 @@ public class OrderAdapter extends BaseAdapter {
         if(view==null){
             view=layoutInflater.inflate(R.layout.item, parent, false);
         }
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM H:m");
+
 
         Order o=getOrder(position);
 
         ((TextView) view.findViewById(R.id.price)).setText(String.valueOf(o.getPrice()));
         ((TextView) view.findViewById(R.id.pointadres)).setText(o.getPoint1()+"-"+o.getPoint2());
-        ((TextView) view.findViewById(R.id.pointtime)).setText(o.getDate().toString());
+        ((TextView) view.findViewById(R.id.pointtime)).setText(format.format(o.getDate()));
         ((TextView) view.findViewById(R.id.describe)).setText(o.getDescription());
 
         return view;

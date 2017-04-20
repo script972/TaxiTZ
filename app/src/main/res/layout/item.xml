@@ -6,7 +6,7 @@
     android:background="@drawable/gradient_list"
     android:layout_marginTop="2dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -16,17 +16,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/pointtime"
-            android:text="2017-03-21 18:19:19"/>
+            android:text="2017-03-21 18:19:19"
+            android:layout_alignParentLeft="true"/>
 
         <TextView
+            android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/price"
-            android:layout_gravity="right"
-            android:textAlignment="inherit"
-            android:text="Поездка: 45руб"/>
+            android:textColor="@color/red"
+            android:text="Поездка: 45руб"
+            android:layout_alignParentRight="true" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <LinearLayout
