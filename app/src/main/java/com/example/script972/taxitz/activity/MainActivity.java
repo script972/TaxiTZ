@@ -25,8 +25,9 @@ public class MainActivity extends TabActivity {
     final String TABS_TAG_2 = "Tag 2";
 
 
-
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -37,18 +38,16 @@ public class MainActivity extends TabActivity {
 
         tabSpec = tabHost.newTabSpec(TABS_TAG_1);
         tabSpec.setContent(new Intent(this, TabAir.class));
-        View view=getLayoutInflater().inflate(R.layout.tab_air_header, null);
+        View view = getLayoutInflater().inflate(R.layout.tab_air_header, null);
         tabSpec.setIndicator(view);
         tabHost.addTab(tabSpec);
-
 
 
         tabSpec = tabHost.newTabSpec(TABS_TAG_2);
         tabSpec.setContent(new Intent(this, TabPreviously.class));
-        view=getLayoutInflater().inflate(R.layout.tab_previously_header, null);
+        view = getLayoutInflater().inflate(R.layout.tab_previously_header, null);
         tabSpec.setIndicator(view);
         tabHost.addTab(tabSpec);
-
 
 
         tabHost.setCurrentTabByTag(TABS_TAG_1);

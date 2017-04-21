@@ -7,14 +7,10 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.ListViewCompat;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.script972.taxitz.OrderAdapter;
 import com.example.script972.taxitz.R;
@@ -35,55 +31,45 @@ public class TabAir extends Activity implements LocationListener {
     ArrayList<Order> orders = new ArrayList<Order>();
     OrderAdapter orderAdapter;
     SpliterLine spliterLine;
-
-    TextView responceView;
-
-    private double x = 0, y = 0;
-    String [] access={"31","123456"};
+    String[] access = {"31", "123456"};
     UpdateTask updateTask;
     Thread t;
-    int wait=40; //second
-    int count=0;
+    int wait = 3; //second
+    int count = 0;
     ListView lvMain;
-
+    private double x = 0, y = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_air);
 
-        responceView= (TextView) findViewById(R.id.responce);
-        lvMain=(ListView) findViewById(R.id.lvAir);
+
+        lvMain = (ListView) findViewById(R.id.lvAir);
 
 
         orderAdapter = new OrderAdapter(this, orders);
-
-
-
-
-
-
-
+        lvMain.setAdapter(orderAdapter);
 
 
 
         /*GET*/
-        t=new Thread(){
+        t = new Thread() {
             @Override
             public void run() {
-                while (!isInterrupted()){
+                while (!isInterrupted()) {
 
 
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                updateTask=new UpdateTask();
-                                updateTask.execute();
-                            }
-                        });
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateTask = new UpdateTask();
+                            updateTask.execute();
+                        }
+                    });
 
                     try {
-                        Thread.sleep(wait*1000);
+                        Thread.sleep(wait * 1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -120,8 +106,8 @@ public class TabAir extends Activity implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        x=location.getLongitude();
-        y=location.getLatitude();
+        x = location.getLongitude();
+        y = location.getLatitude();
 
     }
 
@@ -142,8 +128,8 @@ public class TabAir extends Activity implements LocationListener {
 
 
     class UpdateTask extends AsyncTask<Void, Void, Void> {
+        List<Order> list = new ArrayList<>();
         private String response;
-        List<Order> list=new ArrayList<>();
 /*!! inlude apach.http !!*/
 
         @Override
@@ -151,7 +137,7 @@ public class TabAir extends Activity implements LocationListener {
             super.onPostExecute(aVoid);
            /* responceView.setText("end");*/
 
-           // responceView.setText(responceView.getText()+String.valueOf(count)+" "+response);
+            // responceView.setText(responceView.getText()+String.valueOf(count)+" "+response);
             for (Order or :
                     list) {
                 Log.i("sok", or.toString());
@@ -163,21 +149,20 @@ public class TabAir extends Activity implements LocationListener {
 
             for (int i = 0; i < list.size(); i++) {
                 //orders.add(new Order("Адрес "+i, "Адрес "+i+1, "Описание "+i*23, 30+i*21, new Date()));
-                if(i==0)
+                if (i == 0)
                     continue;
                 temp.add(new Order(list.get(i).getPoint1(), "", list.get(i).getDescription(), list.get(i).getPrice(), new Date()));
             }
 
 
-
             orders.addAll(temp);
-
+            orderAdapter.notifyDataSetChanged();
 
 
             //orders= (ArrayList<Order>) list;
 
 
-            lvMain.setAdapter(orderAdapter);
+            //
 
         }
 
@@ -185,15 +170,15 @@ public class TabAir extends Activity implements LocationListener {
         protected Void doInBackground(Void... params) {
 
             DefaultHttpClient hc = new DefaultHttpClient();
-            ResponseHandler responseHandler=new BasicResponseHandler();
+            ResponseHandler responseHandler = new BasicResponseHandler();
 
 
-            Log.i("sok","ADDRES REQUEST:"+"http://89.184.67.115/taxi/index.php?id_car="+access[0]+"&pass="+access[1]+"&get_order=1&x="+x+"&y="+y);
-            HttpGet httpGet=new HttpGet("http://89.184.67.115/taxi/index.php?id_car="+access[0]+"&pass="+access[1]+"&get_order=1&x="+x+"&y="+y);
+            Log.i("sok", "ADDRES REQUEST:" + "http://89.184.67.115/taxi/index.php?id_car=" + access[0] + "&pass=" + access[1] + "&get_order=1&x=" + x + "&y=" + y);
+            HttpGet httpGet = new HttpGet("http://89.184.67.115/taxi/index.php?id_car=" + access[0] + "&pass=" + access[1] + "&get_order=1&x=" + x + "&y=" + y);
             try {
-                response=(String)hc.execute(httpGet, responseHandler);
-                spliterLine=new SpliterLine(response);
-                list=spliterLine.splitStringByObjectAir();
+                response = (String) hc.execute(httpGet, responseHandler);
+                spliterLine = new SpliterLine(response);
+                list = spliterLine.splitStringByObjectAir();
                 Log.d("sok", response);
             } catch (IOException e) {
                 e.printStackTrace();

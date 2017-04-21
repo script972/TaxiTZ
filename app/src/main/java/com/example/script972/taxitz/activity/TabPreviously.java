@@ -22,17 +22,17 @@ public class TabPreviously extends Activity {
         setContentView(R.layout.activity_tab_previously);
 
 
-        fillData();
+        //fillData();
         orderAdapter = new OrderAdapter(this, orders);
 
-        ListView lvMain=(ListView) findViewById(R.id.lvPreviously);
+        ListView lvMain = (ListView) findViewById(R.id.lvPreviously);
         lvMain.setAdapter(orderAdapter);
 
     }
 
     private void fillData() {
         for (int i = 0; i < 20; i++) {
-            orders.add(new Order("Адрес ", "Адрес ", "Описание "+i*23, 30+i*21, new Date()));
+            orders.add(new Order("Адрес ", "Адрес ", "Описание " + i * 23, 30 + i * 21, new Date()));
         }
     }
 }

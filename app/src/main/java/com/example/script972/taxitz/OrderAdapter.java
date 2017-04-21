@@ -24,7 +24,7 @@ public class OrderAdapter extends BaseAdapter {
     public OrderAdapter(Context ctx, ArrayList<Order> orders) {
         this.ctx = ctx;
         this.orders = orders;
-        layoutInflater=(LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layoutInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -45,13 +45,13 @@ public class OrderAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
-        if(view==null){
-            view=layoutInflater.inflate(R.layout.item, parent, false);
+        if (view == null) {
+            view = layoutInflater.inflate(R.layout.item, parent, false);
         }
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd H:M");
 
 
-        Order o=getOrder(position);
+        Order o = getOrder(position);
 
         ((TextView) view.findViewById(R.id.price)).setText(String.valueOf(o.getPrice()));
         ((TextView) view.findViewById(R.id.pointadres)).setText(o.getPoint1());
@@ -62,7 +62,7 @@ public class OrderAdapter extends BaseAdapter {
 
     }
 
-    Order getOrder(int position){
+    Order getOrder(int position) {
         return (Order) getItem(position);
     }
 }
