@@ -48,7 +48,7 @@ public class OrderAdapter extends BaseAdapter {
         if(view==null){
             view=layoutInflater.inflate(R.layout.item, parent, false);
         }
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM H:m");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd H:m:s");
 
 
         Order o=getOrder(position);

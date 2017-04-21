@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.script972.taxitz.OrderAdapter;
 import com.example.script972.taxitz.R;
+import com.example.script972.taxitz.SpliterLine;
 import com.example.script972.taxitz.model.Order;
 
 import org.apache.http.client.ResponseHandler;
@@ -33,6 +34,7 @@ import java.util.List;
 public class TabAir extends Activity implements LocationListener {
     ArrayList<Order> orders = new ArrayList<Order>();
     OrderAdapter orderAdapter;
+    SpliterLine spliterLine;
 
     TextView responceView;
 
@@ -143,7 +145,7 @@ public class TabAir extends Activity implements LocationListener {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             responceView.setText("end");
-            responceView.setText(responceView.getText()+String.valueOf(count)+" "+response);
+           // responceView.setText(responceView.getText()+String.valueOf(count)+" "+response);
             count++;
         }
 
@@ -156,7 +158,9 @@ public class TabAir extends Activity implements LocationListener {
             HttpGet httpGet=new HttpGet("http://89.184.67.115/taxi/index.php?id_car="+access[0]+"&pass="+access[1]+"&get_order=1&x="+x+"&y="+y);
             try {
                 response=(String)hc.execute(httpGet, responseHandler);
-                Log.d("log", response);
+                spliterLine=new SpliterLine(response);
+                spliterLine.splitStringByObjectAir();
+                Log.d("sok", response);
             } catch (IOException e) {
                 e.printStackTrace();
             }
