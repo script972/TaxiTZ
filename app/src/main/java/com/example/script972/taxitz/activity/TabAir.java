@@ -42,8 +42,9 @@ public class TabAir extends Activity implements LocationListener {
     String [] access={"31","123456"};
     UpdateTask updateTask;
     Thread t;
-    int wait=3; //second
+    int wait=40; //second
     int count=0;
+    ListView lvMain;
 
 
     @Override
@@ -52,12 +53,11 @@ public class TabAir extends Activity implements LocationListener {
         setContentView(R.layout.activity_tab_air);
 
         responceView= (TextView) findViewById(R.id.responce);
+        lvMain=(ListView) findViewById(R.id.lvAir);
 
-        fillData();
+
         orderAdapter = new OrderAdapter(this, orders);
 
-        ListView lvMain=(ListView) findViewById(R.id.lvAir);
-        lvMain.setAdapter(orderAdapter);
 
 
 
@@ -72,8 +72,8 @@ public class TabAir extends Activity implements LocationListener {
             @Override
             public void run() {
                 while (!isInterrupted()){
-                    try {
-                        Thread.sleep(wait*1000);
+
+
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -81,9 +81,13 @@ public class TabAir extends Activity implements LocationListener {
                                 updateTask.execute();
                             }
                         });
+
+                    try {
+                        Thread.sleep(wait*1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+
 
                 }
             }
@@ -108,11 +112,11 @@ public class TabAir extends Activity implements LocationListener {
 
     }
 
-    private void fillData() {
+  /*  private void fillData() {
         for (int i = 0; i < 20; i++) {
             orders.add(new Order("Адрес "+i, "Адрес "+i+1, "Описание "+i*23, 30+i*21, new Date()));
         }
-    }
+    }*/
 
     @Override
     public void onLocationChanged(Location location) {
@@ -139,14 +143,42 @@ public class TabAir extends Activity implements LocationListener {
 
     class UpdateTask extends AsyncTask<Void, Void, Void> {
         private String response;
+        List<Order> list=new ArrayList<>();
 /*!! inlude apach.http !!*/
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            responceView.setText("end");
+           /* responceView.setText("end");*/
+
            // responceView.setText(responceView.getText()+String.valueOf(count)+" "+response);
+            for (Order or :
+                    list) {
+                Log.i("sok", or.toString());
+
+            }
             count++;
+            //fillData();
+            ArrayList<Order> temp = new ArrayList<Order>();
+
+            for (int i = 0; i < list.size(); i++) {
+                //orders.add(new Order("Адрес "+i, "Адрес "+i+1, "Описание "+i*23, 30+i*21, new Date()));
+                if(i==0)
+                    continue;
+                temp.add(new Order(list.get(i).getPoint1(), "", list.get(i).getDescription(), list.get(i).getPrice(), new Date()));
+            }
+
+
+
+            orders.addAll(temp);
+
+
+
+            //orders= (ArrayList<Order>) list;
+
+
+            lvMain.setAdapter(orderAdapter);
+
         }
 
         @Override
@@ -155,11 +187,13 @@ public class TabAir extends Activity implements LocationListener {
             DefaultHttpClient hc = new DefaultHttpClient();
             ResponseHandler responseHandler=new BasicResponseHandler();
 
+
+            Log.i("sok","ADDRES REQUEST:"+"http://89.184.67.115/taxi/index.php?id_car="+access[0]+"&pass="+access[1]+"&get_order=1&x="+x+"&y="+y);
             HttpGet httpGet=new HttpGet("http://89.184.67.115/taxi/index.php?id_car="+access[0]+"&pass="+access[1]+"&get_order=1&x="+x+"&y="+y);
             try {
                 response=(String)hc.execute(httpGet, responseHandler);
                 spliterLine=new SpliterLine(response);
-                spliterLine.splitStringByObjectAir();
+                list=spliterLine.splitStringByObjectAir();
                 Log.d("sok", response);
             } catch (IOException e) {
                 e.printStackTrace();

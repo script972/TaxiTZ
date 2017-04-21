@@ -14,6 +14,9 @@ public class Order {
     private double price;
     private Date date;
 
+    public Order() {
+    }
+
     public Order(String point1, String point2, String description, double price, Date date) {
         this.point1 = point1;
         this.point2 = point2;
