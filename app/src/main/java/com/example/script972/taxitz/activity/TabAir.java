@@ -28,15 +28,15 @@ import java.util.Date;
 import java.util.List;
 
 public class TabAir extends Activity implements LocationListener {
-    ArrayList<Order> orders = new ArrayList<Order>();
-    OrderAdapter orderAdapter;
-    SpliterLine spliterLine;
-    String[] access = {"31", "123456"};
-    UpdateTask updateTask;
-    Thread t;
-    int wait = 3; //second
-    int count = 0;
-    ListView lvMain;
+    private ArrayList<Order> orders = new ArrayList<Order>();
+    private OrderAdapter orderAdapter;
+    private SpliterLine spliterLine;
+    private String[] access = {"31", "123456"};
+    private UpdateTask updateTask;
+    private Thread t;
+    private int wait = 3; //second
+    private int count = 0;
+    private ListView lvMain;
     private double x = 0, y = 0;
 
     @Override
@@ -154,15 +154,8 @@ public class TabAir extends Activity implements LocationListener {
                 temp.add(new Order(list.get(i).getPoint1(), "", list.get(i).getDescription(), list.get(i).getPrice(), new Date()));
             }
 
-
             orders.addAll(temp);
             orderAdapter.notifyDataSetChanged();
-
-
-            //orders= (ArrayList<Order>) list;
-
-
-            //
 
         }
 
